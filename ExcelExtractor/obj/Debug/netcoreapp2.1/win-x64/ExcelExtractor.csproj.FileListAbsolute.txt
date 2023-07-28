@@ -1,0 +1,14 @@
+c:\Git\ExcelExtractor\ExcelExtractor\bin\Debug\netcoreapp2.1\win-x64\hostpolicy.dll
+c:\Git\ExcelExtractor\ExcelExtractor\bin\Debug\netcoreapp2.1\win-x64\hostfxr.dll
+c:\Git\ExcelExtractor\ExcelExtractor\bin\Debug\netcoreapp2.1\win-x64\ExcelExtractor.exe
+c:\Git\ExcelExtractor\ExcelExtractor\bin\Debug\netcoreapp2.1\win-x64\ExcelExtractor.deps.json
+c:\Git\ExcelExtractor\ExcelExtractor\bin\Debug\netcoreapp2.1\win-x64\ExcelExtractor.runtimeconfig.json
+c:\Git\ExcelExtractor\ExcelExtractor\bin\Debug\netcoreapp2.1\win-x64\ExcelExtractor.runtimeconfig.dev.json
+c:\Git\ExcelExtractor\ExcelExtractor\bin\Debug\netcoreapp2.1\win-x64\ExcelExtractor.dll
+c:\Git\ExcelExtractor\ExcelExtractor\bin\Debug\netcoreapp2.1\win-x64\ExcelExtractor.pdb
+c:\Git\ExcelExtractor\ExcelExtractor\obj\Debug\netcoreapp2.1\win-x64\ExcelExtractor.csprojAssemblyReference.cache
+c:\Git\ExcelExtractor\ExcelExtractor\obj\Debug\netcoreapp2.1\win-x64\ExcelExtractor.csproj.CoreCompileInputs.cache
+c:\Git\ExcelExtractor\ExcelExtractor\obj\Debug\netcoreapp2.1\win-x64\ExcelExtractor.AssemblyInfoInputs.cache
+c:\Git\ExcelExtractor\ExcelExtractor\obj\Debug\netcoreapp2.1\win-x64\ExcelExtractor.AssemblyInfo.cs
+c:\Git\ExcelExtractor\ExcelExtractor\obj\Debug\netcoreapp2.1\win-x64\ExcelExtractor.dll
+c:\Git\ExcelExtractor\ExcelExtractor\obj\Debug\netcoreapp2.1\win-x64\ExcelExtractor.pdb

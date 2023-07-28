@@ -1,0 +1,11 @@
+C:\Git\ExcelExtractor\ExcelExtractor\obj\Debug\netcoreapp2.1\ExcelExtractor.csprojAssemblyReference.cache
+C:\Git\ExcelExtractor\ExcelExtractor\obj\Debug\netcoreapp2.1\ExcelExtractor.csproj.CoreCompileInputs.cache
+C:\Git\ExcelExtractor\ExcelExtractor\obj\Debug\netcoreapp2.1\ExcelExtractor.AssemblyInfoInputs.cache
+C:\Git\ExcelExtractor\ExcelExtractor\obj\Debug\netcoreapp2.1\ExcelExtractor.AssemblyInfo.cs
+C:\Git\ExcelExtractor\ExcelExtractor\bin\Debug\netcoreapp2.1\ExcelExtractor.deps.json
+C:\Git\ExcelExtractor\ExcelExtractor\bin\Debug\netcoreapp2.1\ExcelExtractor.runtimeconfig.json
+C:\Git\ExcelExtractor\ExcelExtractor\bin\Debug\netcoreapp2.1\ExcelExtractor.runtimeconfig.dev.json
+C:\Git\ExcelExtractor\ExcelExtractor\bin\Debug\netcoreapp2.1\ExcelExtractor.dll
+C:\Git\ExcelExtractor\ExcelExtractor\bin\Debug\netcoreapp2.1\ExcelExtractor.pdb
+C:\Git\ExcelExtractor\ExcelExtractor\obj\Debug\netcoreapp2.1\ExcelExtractor.dll
+C:\Git\ExcelExtractor\ExcelExtractor\obj\Debug\netcoreapp2.1\ExcelExtractor.pdb
