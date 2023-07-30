@@ -51,8 +51,8 @@ namespace ExcelExtractor
         }
         private static void waitDialogue()
         {
-            Console.WriteLine("Press andy key to proceed."); // Hinweis für den Benutzer
-            Console.ReadKey(true); // Warten auf die Eingabe einer Taste
+            Console.WriteLine("Press andy key to proceed.");
+            Console.ReadKey(true); 
             Environment.Exit(0);
         }
         private static void ExitOnNoParameterGiven(string[] args)
@@ -70,9 +70,8 @@ namespace ExcelExtractor
         {
             try
             {
-                // SelectMany wird verwendet, um eine flache Liste aus der verschachtelten Liste zu erstellen.
-                // GetFiles gibt alle Dateien in dem angegebenen Pfad zurück.
-                // Die Suche ist rekursiv, da die Option AllDirectories verwendet wird.
+                // SelectMany is used to create a flat list out of the deep list
+                // The search is recursive due to the option AllDirectories
                 Console.WriteLine(folderPath);
                 var files = Directory.GetFiles(folderPath, "*.*", SearchOption.AllDirectories)
                     .Where(file => extensions.Contains(Path.GetExtension(file)))
@@ -82,8 +81,8 @@ namespace ExcelExtractor
             }
             catch (Exception ex)
             {
-                // Ausnahmehandhabung entsprechend Ihrer Anforderungen
-                Console.WriteLine($"Ein Fehler ist aufgetreten: {ex.Message}");
+                // Exception handling
+                Console.WriteLine($"A failure was foubd: {ex.Message}");
                 return new List<string>();
             }
         }
