@@ -3,7 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.IO;
 using System.Threading;
-using ClosedXML.Excel;
+using NPOI.HSSF.UserModel;
+using NPOI.SS.UserModel;
+using NPOI.XSSF.UserModel;
 
 namespace ExcelExtractor
 {
@@ -51,8 +53,8 @@ namespace ExcelExtractor
         }
         private static void waitDialogue()
         {
-            Console.WriteLine("Press andy key to proceed.");
-            Console.ReadKey(true); 
+            Console.WriteLine("Press andy key to proceed."); // Hinweis für den Benutzer
+            Console.ReadKey(true); // Warten auf die Eingabe einer Taste
             Environment.Exit(0);
         }
         private static void ExitOnNoParameterGiven(string[] args)
@@ -70,8 +72,9 @@ namespace ExcelExtractor
         {
             try
             {
-                // SelectMany is used to create a flat list out of the deep list
-                // The search is recursive due to the option AllDirectories
+                // SelectMany wird verwendet, um eine flache Liste aus der verschachtelten Liste zu erstellen.
+                // GetFiles gibt alle Dateien in dem angegebenen Pfad zurück.
+                // Die Suche ist rekursiv, da die Option AllDirectories verwendet wird.
                 Console.WriteLine(folderPath);
                 var files = Directory.GetFiles(folderPath, "*.*", SearchOption.AllDirectories)
                     .Where(file => extensions.Contains(Path.GetExtension(file)))
@@ -81,8 +84,8 @@ namespace ExcelExtractor
             }
             catch (Exception ex)
             {
-                // Exception handling
-                Console.WriteLine($"A failure was foubd: {ex.Message}");
+                // Ausnahmehandhabung entsprechend Ihrer Anforderungen
+                Console.WriteLine($"Ein Fehler ist aufgetreten: {ex.Message}");
                 return new List<string>();
             }
         }
@@ -108,26 +111,7 @@ namespace ExcelExtractor
             Console.Write("\r[{0}{1}] {2:0.00}%", new string('#', current), new string(' ', max - current), percent);
 
         }
-        public static List<string> ReadFieldsFromExcel(string filePath, List<string> cellReferences)
-        {
-            var results = new List<string>();
-            using (var workbook = new XLWorkbook(filePath))
-            {
-                var worksheet = workbook.Worksheet(1); // Nehmen Sie das erste Arbeitsblatt
-                
-                foreach (var cellReference in cellReferences)
-                {
-                    var cell = worksheet.Cell(cellReference);
-
-                    if (cell != null && !string.IsNullOrEmpty(cell.Value.ToString()))
-                    {
-                        results.Add(cell.Value.ToString());
-                    }
-                }
-            }
-
-            return results;
-        }
+     
         public static void WriteDictionaryToExcel(string filePath, Dictionary<string, List<string>> data, List<string> headers)
         {
             // Überprüfen, ob die Datei bereits existiert
@@ -139,31 +123,85 @@ namespace ExcelExtractor
                 filePath = Path.Combine(dir, $"{fileName}(1){fileExt}");
             }
 
-            using (var workbook = new XLWorkbook())
+            IWorkbook workbook = new XSSFWorkbook();
+
+            ISheet sheet = workbook.CreateSheet("Sheet1");
+
+            // Schreibe die Spaltenüberschriften
+            IRow headerRow = sheet.CreateRow(0);
+            headerRow.CreateCell(0).SetCellValue("Key");
+            for (int i = 0; i < headers.Count; i++)
             {
-                var worksheet = workbook.Worksheets.Add("Sheet1");
-
-                // Schreibe die Spaltenüberschriften
-                worksheet.Cell(1, 1).Value = "Key";
-                for (int i = 0; i < headers.Count; i++)
-                {
-                    worksheet.Cell(1, i + 2).Value = headers[i];
-                }
-
-                // Schreibe die Daten
-                int row = 2;
-                foreach (var kvp in data)
-                {
-                    worksheet.Cell(row, 1).Value = kvp.Key;
-                    for (int i = 0; i < kvp.Value.Count; i++)
-                    {
-                        worksheet.Cell(row, i + 2).Value = kvp.Value[i];
-                    }
-                    row++;
-                }
-
-                workbook.SaveAs(filePath);
+                headerRow.CreateCell(i + 1).SetCellValue(headers[i]);
             }
+
+            // Schreibe die Daten
+            int row = 1;
+            foreach (var kvp in data)
+            {
+                IRow dataRow = sheet.CreateRow(row);
+                dataRow.CreateCell(0).SetCellValue(kvp.Key);
+                for (int i = 0; i < kvp.Value.Count; i++)
+                {
+                    dataRow.CreateCell(i + 1).SetCellValue(kvp.Value[i]);
+                }
+                row++;
+            }
+
+            using (var fileStream = new FileStream(filePath, FileMode.Create, FileAccess.Write))
+            {
+                workbook.Write(fileStream);
+            }
+        }
+        public static List<string> ReadFieldsFromExcel(string filePath, List<string> cellReferences)
+        {
+            var results = new List<string>();
+
+            using (var fs = new FileStream(filePath, FileMode.Open, FileAccess.Read))
+            {
+                IWorkbook workbook;
+
+                string extension = Path.GetExtension(filePath);
+
+                if (extension == ".xls")
+                {
+                    workbook = new HSSFWorkbook(fs);
+                }
+                else if (extension == ".xlsx" || extension == ".xlsm")
+                {
+                    workbook = new XSSFWorkbook(fs);
+                }
+                else
+                {
+                    throw new ArgumentException("Unsupported file extension: " + extension);
+                }
+
+                ISheet sheet = workbook.GetSheetAt(0); // Nehmen Sie das erste Arbeitsblatt
+
+                foreach (var cellReference in cellReferences)
+                {
+                    var cell = GetCell(sheet, cellReference);
+
+                    if (cell != null && cell.CellType == CellType.String && !string.IsNullOrEmpty(cell.StringCellValue))
+                    {
+                        results.Add(cell.StringCellValue);
+                    }
+                }
+            }
+
+            return results;
+        }
+
+        // Hilfsmethode um die Zelle basierend auf einer Referenz wie "A1" zu holen
+        private static ICell GetCell(ISheet sheet, string cellReference)
+        {
+            var cellRef = new NPOI.SS.Util.CellReference(cellReference);
+            IRow row = sheet.GetRow(cellRef.Row);
+            if (row != null)
+            {
+                return row.GetCell(cellRef.Col);
+            }
+            return null;
         }
     }
 }
